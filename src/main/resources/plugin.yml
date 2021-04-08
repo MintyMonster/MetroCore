@@ -1,0 +1,66 @@
+name: MetroCore
+version: 1.0
+main: com.minty.metrocore.MetroCore
+author: MintyMonster
+description: Core plugin for SurviveMetro
+commands:
+  fly:
+    description: Fly in your own, allied or truced territory
+    usage: /fly
+    permission: metrocore.fly
+    permission-message: Permission denied.
+  metrocore:
+    description: Admin MetroCore commands
+    usage: /metrocore
+    permission-message: Permission denied.
+    permission: metrocore.admin
+  mod:
+    description: Moderation logging command
+    usage: /mod
+    permission: metrocore.mod
+    permission-message: Permission denied.
+  admin:
+    description: Admin logging command
+    usage: /admin
+    permission: metrocore.admin
+    permission-message: Permission denied.
+  rtp:
+    aliases: [wild]
+    description: Metro's own Random teleporting command
+    usage: /rtp
+    permission: metrocore.rtp
+    permission-message: Permission denied.
+  notes:
+    description: Basic notes command
+    usage: /notes
+    permission: metrocore.notes
+    permission-message: Permission denied.
+  bugreport:
+    aliases: [brep]
+    description: Bug report system command
+    usage: /bugreport
+    permission: metrocore.bugreport
+    permission-message: Permission denied.
+  report:
+    aliases: [rep, playerreport, reports]
+    description: Report a player
+    usage: /report
+    permission: metrocore.report
+    permission-message: Permission denied.
+  watchlist:
+    aliases: [wlist, watch]
+    description: Add player to watchlist
+    permission: metrocore.mod
+    permission-message: Permission denied.
+  suggestion:
+    aliases: [suggest, sug]
+    description: Add suggestion
+    permission: metrocore.suggestion
+    permission-message: Permission denied.
+  # Add /dev || regular player > op ! op
+
+permissions:
+  metrocore.fly:
+    children:
+      metrocore.fly.ally: true
+      metrocore.fly.truce: true
