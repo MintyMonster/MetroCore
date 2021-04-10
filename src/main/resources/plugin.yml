@@ -4,11 +4,6 @@ main: com.minty.metrocore.MetroCore
 author: MintyMonster
 description: Core plugin for SurviveMetro
 commands:
-  fly:
-    description: Fly in your own, allied or truced territory
-    usage: /fly
-    permission: metrocore.fly
-    permission-message: Permission denied.
   metrocore:
     description: Admin MetroCore commands
     usage: /metrocore
@@ -58,9 +53,3 @@ commands:
     permission: metrocore.suggestion
     permission-message: Permission denied.
   # Add /dev || regular player > op ! op
-
-permissions:
-  metrocore.fly:
-    children:
-      metrocore.fly.ally: true
-      metrocore.fly.truce: true

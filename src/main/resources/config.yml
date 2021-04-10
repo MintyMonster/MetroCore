@@ -10,7 +10,7 @@ metroclaimkeys:
     # True = gives all commands from list to player on Overclaim
     # use %player% (lowercase p) to use player's name
     # Feel free to add more commands to the list but ensure it fits the format
-    multiple_commands: 'false'
+    multiple_commands: false
     commands:
       - 'give %player% diamond 1'
       - 'give %player% emerald 1'
@@ -24,19 +24,9 @@ metrofly:
 
   commands:
     # These are all lists, so add as many as you want. Just ensure that you keep the format
-    fly_ally_enable:
+    fly_enable:
       - null
-    fly_ally_disable:
-      - null
-    fly_truce_enable:
-      - null
-    fly_truce_disable:
-      - null
-    fly_own_enable:
-      - null
-    fly_own_disable:
-      - null
-    out_of_claim:
+    fly_disable:
       - null
 
 # /mod on||off
