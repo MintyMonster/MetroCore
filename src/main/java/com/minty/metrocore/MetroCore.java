@@ -49,7 +49,7 @@ public class MetroCore extends JavaPlugin {
     public void onEnable() {
 
         try {
-            jda = JDABuilder.createDefault("ODI5MDIzNTEzNDIzMTE4MzY2.YGyGUA.cpBXOKejSnlttnnp6eho75TedqM").build();
+            jda = JDABuilder.createDefault("token").build();
             //jda.addEventListener(new DiscordListener());
             jda.awaitReady();
             this.getLogger().info("[MetroCore] Connected to Discord.");
