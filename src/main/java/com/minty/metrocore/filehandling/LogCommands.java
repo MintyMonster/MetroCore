@@ -1,6 +1,8 @@
-package filehandling;
+package com.minty.metrocore.filehandling;
 
 import com.minty.metrocore.MetroCore;
+import com.minty.metrocore.filehandling.CreateAdminFile;
+import com.minty.metrocore.filehandling.CreateModFile;
 import org.bukkit.entity.Player;
 
 import java.io.BufferedWriter;

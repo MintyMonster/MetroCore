@@ -1,4 +1,4 @@
-package filehandling;
+package com.minty.metrocore.filehandling;
 
 import com.minty.metrocore.MetroCore;
 import org.bukkit.entity.Player;
@@ -6,17 +6,17 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.IOException;
 
-public class CreateModFile {
+public class CreateAdminFile {
 
     private final MetroCore plugin;
 
-    public CreateModFile(MetroCore plugin){
+    public CreateAdminFile(MetroCore plugin){
         this.plugin = plugin;
     }
 
-    public void createModFile(Player player){
+    public void createAdminFile(Player player){
         File dir = plugin.getDataFolder();
-        File Folder = new File(dir + File.separator + "Logs" + File.separator + "Mod" + File.separator);
+        File Folder = new File(dir + File.separator + "Logs" + File.separator + "Admin" + File.separator);
         if(!Folder.exists()) Folder.mkdir();
         File file = new File(Folder, player.getName() + ".txt");
         if(!file.exists()) {

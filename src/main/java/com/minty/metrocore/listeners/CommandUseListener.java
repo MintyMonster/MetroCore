@@ -1,6 +1,6 @@
-package listeners;
+package com.minty.metrocore.listeners;
 
-import filehandling.LogCommands;
+import com.minty.metrocore.filehandling.LogCommands;
 import com.minty.metrocore.MetroCore;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

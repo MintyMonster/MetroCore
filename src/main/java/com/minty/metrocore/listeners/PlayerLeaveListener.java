@@ -1,9 +1,8 @@
-package listeners;
+package com.minty.metrocore.listeners;
 
 import com.minty.metrocore.MetroCore;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import methods.AdminMode;
-import methods.ModMode;
+import com.minty.metrocore.methods.AdminMode;
+import com.minty.metrocore.methods.ModMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;

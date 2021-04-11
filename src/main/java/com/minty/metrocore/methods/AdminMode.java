@@ -1,7 +1,6 @@
-package methods;
+package com.minty.metrocore.methods;
 
 import com.minty.metrocore.MetroCore;
-import commands.AdminCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;

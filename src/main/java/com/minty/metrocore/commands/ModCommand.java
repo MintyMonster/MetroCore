@@ -1,7 +1,7 @@
-package commands;
+package com.minty.metrocore.commands;
 
 import com.minty.metrocore.MetroCore;
-import methods.ModMode;
+import com.minty.metrocore.methods.ModMode;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,9 +24,9 @@ public class ModCommand implements CommandExecutor {
         if(plugin.Mod.containsKey((Player) sender)){
             if(args.length == 0)
                 modMode.toggleModMode((Player) sender);
-            if(args[0].equalsIgnoreCase("on"))
+            else if(args[0].equalsIgnoreCase("on"))
                 modMode.enableModMode((Player) sender);
-            if(args[0].equalsIgnoreCase("off"))
+            else if(args[0].equalsIgnoreCase("off"))
                 modMode.disableModMode((Player) sender);
         }else{
             sender.sendMessage(ChatColor.RED + "Error! <ModMode> Please try and relog!");

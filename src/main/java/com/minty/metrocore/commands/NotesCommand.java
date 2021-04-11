@@ -1,4 +1,4 @@
-package commands;
+package com.minty.metrocore.commands;
 
 import com.minty.metrocore.MetroCore;
 import net.dv8tion.jda.api.EmbedBuilder;

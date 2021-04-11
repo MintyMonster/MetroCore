@@ -1,4 +1,4 @@
-package commands;
+package com.minty.metrocore.commands;
 
 import com.minty.metrocore.MetroCore;
 import org.bukkit.ChatColor;
@@ -20,7 +20,7 @@ public class MetroCoreCommand implements CommandExecutor {
         if (args.length == 0)
             sender.sendMessage(ChatColor.RED + "Usage: /metrocore [command]");
 
-        if (args[0].equalsIgnoreCase("reload")) {
+        else if (args[0].equalsIgnoreCase("reload")) {
             try {
                 plugin.reloadConfig();
                 sender.sendMessage(ChatColor.GOLD + "[MetroCore] " + ChatColor.GREEN + "Reload complete.");

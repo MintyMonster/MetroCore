@@ -1,4 +1,4 @@
-package methods;
+package com.minty.metrocore.methods;
 
 import com.minty.metrocore.MetroCore;
 import org.bukkit.Bukkit;

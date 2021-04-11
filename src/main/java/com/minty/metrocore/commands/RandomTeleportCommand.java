@@ -1,4 +1,4 @@
-package commands;
+package com.minty.metrocore.commands;
 
 import com.minty.metrocore.MetroCore;
 import org.bukkit.*;

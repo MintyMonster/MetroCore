@@ -1,4 +1,4 @@
-package com.minty.metrocore;
+package com.minty.metrocore.methods;
 
 import org.bukkit.entity.Player;
 

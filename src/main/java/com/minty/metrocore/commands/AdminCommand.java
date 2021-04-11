@@ -1,7 +1,7 @@
-package commands;
+package com.minty.metrocore.commands;
 
 import com.minty.metrocore.MetroCore;
-import methods.AdminMode;
+import com.minty.metrocore.methods.AdminMode;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,9 +23,9 @@ public class AdminCommand implements CommandExecutor {
         if(plugin.Admin.containsKey((Player) sender)){
             if(args.length == 0)
                 adminMode.toggleAdminMode((Player) sender);
-            if(args[0].equalsIgnoreCase("on"))
+            else if(args[0].equalsIgnoreCase("on"))
                 adminMode.enableAdminMode((Player) sender);
-            if(args[0].equalsIgnoreCase("off"))
+            else if(args[0].equalsIgnoreCase("off"))
                 adminMode.disableAdminMode((Player) sender);
         }else{
             sender.sendMessage(ChatColor.RED + "Error! <AdminMode> Please try and relog!");

@@ -1,4 +1,4 @@
-package filehandling;
+package com.minty.metrocore.filehandling;
 
 import com.minty.metrocore.MetroCore;
 import org.bukkit.entity.Player;

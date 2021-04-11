@@ -1,8 +1,8 @@
-package listeners;
+package com.minty.metrocore.listeners;
 
-import filehandling.CreateAdminFile;
-import filehandling.CreateModFile;
-import filehandling.PlayerJoinDatabase;
+import com.minty.metrocore.filehandling.CreateAdminFile;
+import com.minty.metrocore.filehandling.CreateModFile;
+import com.minty.metrocore.filehandling.PlayerJoinDatabase;
 import com.minty.metrocore.MetroCore;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

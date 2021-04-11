@@ -1,4 +1,4 @@
-package listeners;
+package com.minty.metrocore.listeners;
 
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
