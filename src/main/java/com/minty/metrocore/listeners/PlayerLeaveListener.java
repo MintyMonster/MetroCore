@@ -9,12 +9,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerLeaveListener implements Listener {
 
-    private final MetroCore plugin;
     private final ModMode modMode;
     private final AdminMode adminMode;
 
-    public PlayerLeaveListener(MetroCore plugin, ModMode modMode, AdminMode adminMode){
-        this.plugin = plugin;
+    public PlayerLeaveListener(ModMode modMode, AdminMode adminMode){
         this.modMode = modMode;
         this.adminMode = adminMode;
     }
@@ -22,15 +20,9 @@ public class PlayerLeaveListener implements Listener {
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event){
         if(event.getPlayer().hasPermission("metrocore.admin")){
-            if(plugin.Admin.get(event.getPlayer())){
-                modMode.disableModMode(event.getPlayer());
-                plugin.Admin.replace(event.getPlayer(), false);
-            }
+            adminMode.disableAdminMode(event.getPlayer());
         }else if(event.getPlayer().hasPermission("metrocore.mod")){
-            if(plugin.Mod.get(event.getPlayer())){
-                adminMode.disableAdminMode(event.getPlayer());
-                plugin.Mod.replace(event.getPlayer(), false);
-            }
+            modMode.disableModMode(event.getPlayer());
         }
     }
 }

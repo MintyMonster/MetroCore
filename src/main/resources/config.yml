@@ -2,7 +2,33 @@
 # This is the home of all things Metro
 # Author: MintyMonster
 
-# Metro Claim keys:
+prefix: '&6&lS&e&lM &8⁎ '
+# &8[&6Metro&8] ➟
+
+RTP:
+  blocked:
+    - 'LAVA'
+    - 'WATER'
+    - 'BIRCH_LEAVES'
+    - 'DARK_OAK_LEAVES'
+    - 'JUNGLE_LEAVES'
+    - 'OAK_LEAVES'
+    - 'SPRUCE_LEAVES'
+
+  # Imagine that minimum is actually a negative number hehe ex dee
+  minimum: 10000
+  maximum: 10000
+  messages:
+    looking_for_safe: '&cLooking for a safe block...'
+    found_safe: '&aSafe block found! &eTeleporting...'
+
+    # %x% = X coord
+    # %y% = Y coord
+    # %z% = Z coord
+    # %player% = player
+  commands:
+    - 'cmi bossbarmsg %player% &7You have been teleported to &e%x%&7, &e%y%&7, &e%z% -t:2 -a:1 -p:1'
+
 
 metroclaimkeys:
   commands:
@@ -14,20 +40,6 @@ metroclaimkeys:
     commands:
       - 'give %player% diamond 1'
       - 'give %player% emerald 1'
-
-metrofly:
-  messages: # Use colour codes here
-    disableflight: '&6[Metro] &cLeaving claim - disabling flight'
-    outofclaim: '&6[Metro] &cYou need to be in your own land, truced land or allied land to use this command.'
-    enable: '&aEnabling flight'
-    disable: '&cDisabling flight'
-
-  commands:
-    # These are all lists, so add as many as you want. Just ensure that you keep the format
-    fly_enable:
-      - null
-    fly_disable:
-      - null
 
 # /mod on||off
 metromoderation:
@@ -75,20 +87,9 @@ metroadmin:
       - '&c&o%player% &eclosed an &c&oAdministration Session&7.'
       - '&7Actions are no longer being logged or monitored.'
 
-# /rtp
-metrortp:
-  # Imagine minimum is a negative number E.G 10,000 == -10,000
-  minimum: 10000
-  maximum: 10000
-  # %x% = X coord
-  # %y% = Y coord
-  # %z% = Z coord
-  # %player% = player
-  commands:
-    - 'cmi bossbarmsg %player% &7You have been teleported to &e%x%&7, &e%y%&7, &e%z% -t:2 -a:1 -p:1'
-  messages:
-    looking_for_safe: '&cLooking for a safe block...'
-    found_safe: '&aSafe block found! &eTeleporting...'
+
+
+
 
 # /bugreport <text>
 bugreport:

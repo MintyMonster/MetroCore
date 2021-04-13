@@ -5,51 +5,55 @@ author: MintyMonster
 description: Core plugin for SurviveMetro
 commands:
   metrocore:
+    aliases: [mcore, mc, metro]
     description: Admin MetroCore commands
     usage: /metrocore
     permission-message: Permission denied.
     permission: metrocore.admin
-  mod:
-    description: Moderation logging command
-    usage: /mod
-    permission: metrocore.mod
-    permission-message: Permission denied.
   admin:
-    description: Admin logging command
-    usage: /admin
+    description: Admin mode toggle
+    usage: /admin [on|off]
+    permission-message: Permission denied.
     permission: metrocore.admin
+  mod:
+    description: Mod mode toggle
+    usage: /mod [on|off]
     permission-message: Permission denied.
-  rtp:
-    aliases: [wild]
-    description: Metro's own Random teleporting command
-    usage: /rtp
-    permission: metrocore.rtp
-    permission-message: Permission denied.
-  notes:
-    description: Basic notes command
-    usage: /notes
-    permission: metrocore.notes
-    permission-message: Permission denied.
-  bugreport:
-    aliases: [brep]
-    description: Bug report system command
-    usage: /bugreport
-    permission: metrocore.bugreport
-    permission-message: Permission denied.
-  report:
-    aliases: [rep, playerreport, reports]
-    description: Report a player
-    usage: /report
-    permission: metrocore.report
-    permission-message: Permission denied.
-  watchlist:
-    aliases: [wlist, watch]
-    description: Add player to watchlist
     permission: metrocore.mod
+  bugreport:
+    description: Report a bug!
+    aliases: [brep, bug, br]
+    usage: /bugreport submit <text>
     permission-message: Permission denied.
-  suggestion:
-    aliases: [suggest, sug]
-    description: Add suggestion
-    permission: metrocore.suggestion
+    permission: metrocore.bugreport
+  playerreport:
+    description: Report a player!
+    aliases: [report, rep, prep, preport]
+    usage: /report submit <player> <reason>
     permission-message: Permission denied.
+    permission: metrocore.playerreport
+  rtp:
+    description: Randomly teleport throughout the world!
+    aliases: [wild, randomteleport]
+    usage: /rtp
+    permission-message: Permission denied.
+    permission: metrocore.rtp
+  notes:
+    description: Metro's very own sticky notes!
+    aliases: [n, note]
+    usage: /notes
+    permission-message: Permission denied.
+    permission: metrocore.admin
+  suggestions:
+    description: Suggestions!
+    aliases: [suggest, suggestion, sugg, sug]
+    usage: /suggest <text>
+    permission-message: Permission denied.
+    permission: metrocore.suggestions
+  watchlist:
+    description: Add to the watchlist!
+    aliases: [wlist, wl, watch]
+    usage: /watchlist add <player> <reason>
+    permission-message: Permission denied.
+    permission: metrocore.watchlist
   # Add /dev || regular player > op ! op

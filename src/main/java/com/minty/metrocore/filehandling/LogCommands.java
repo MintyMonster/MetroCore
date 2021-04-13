@@ -1,8 +1,6 @@
 package com.minty.metrocore.filehandling;
 
 import com.minty.metrocore.MetroCore;
-import com.minty.metrocore.filehandling.CreateAdminFile;
-import com.minty.metrocore.filehandling.CreateModFile;
 import org.bukkit.entity.Player;
 
 import java.io.BufferedWriter;
@@ -13,21 +11,19 @@ import java.time.LocalDateTime;
 
 public class LogCommands {
 
-    private CreateAdminFile adminFile;
-    private CreateModFile modFile;
+    private final CreatePluginFiles createPluginFiles;
     private final MetroCore plugin;
 
-    public LogCommands(MetroCore plugin, CreateAdminFile adminFile, CreateModFile modFile){
+    public LogCommands(MetroCore plugin, CreatePluginFiles createPluginFiles){
         this.plugin = plugin;
-        this.adminFile = adminFile;
-        this.modFile = modFile;
+        this.createPluginFiles = createPluginFiles;
     }
 
     public void logAdminCommands(Player player, String cmd){
         File folder = new File(plugin.getDataFolder() + File.separator + "Logs" + File.separator + "Admin" + File.separator);
         File file = new File(folder, player.getName() + ".txt");
         if(!file.exists()){
-            adminFile.createAdminFile(player);
+            createPluginFiles.createStaffFile(player, "Admin");
         }
 
         try {
@@ -46,7 +42,7 @@ public class LogCommands {
         File folder = new File(plugin.getDataFolder() + File.separator + "Logs" + File.separator + "Mod" + File.separator);
         File file = new File(folder, player.getName() + ".txt");
         if(!file.exists()) {
-            modFile.createModFile(player);
+            createPluginFiles.createStaffFile(player, "Mod");
         }
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));

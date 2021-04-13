@@ -1,6 +1,7 @@
 package com.minty.metrocore.methods;
 
 import com.minty.metrocore.MetroCore;
+import com.minty.metrocore.filehandling.CreateDirectory;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -15,30 +16,30 @@ import java.time.LocalDateTime;
 public class ModMode {
 
     private final MetroCore plugin;
+    private final PlayerStates playerStates;
     private static ConsoleCommandSender sender = Bukkit.getConsoleSender();
 
-    public ModMode(MetroCore plugin){
+    public ModMode(MetroCore plugin, PlayerStates playerStates){
         this.plugin = plugin;
+        this.playerStates = playerStates;
     }
 
     public void toggleModMode(Player player) {
-        if (plugin.Mod.get(player)) {
-            disableModMode(player);
-        } else {
+        if(playerStates.getPlayerState(player).equals(PlayerStates.PlayerState.NORMAL))
             enableModMode(player);
-        }
+        else
+            disableModMode(player);
     }
 
-    public void enableModMode(Player player) {
-        if (plugin.Mod.get(player).equals(true)) {
-            for (String s : plugin.getConfig().getStringList("metromoderation.already_active")) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', s));
-            }
-        } else {
-            plugin.Mod.replace(player, true);
+    public void enableModMode(Player player){
+        if(playerStates.getPlayerState(player).equals(PlayerStates.PlayerState.MOD)){
+            for (String message : plugin.getConfig().getStringList("metromoderation.already_active"))
+                plugin.sendWithPrefix(player, message);
+        }else{
+            playerStates.addPlayers(player, PlayerStates.PlayerState.MOD);
             File folder = new File(plugin.getDataFolder() + File.separator + "Logs" + File.separator + "Mod" + File.separator);
             File file = new File(folder, player.getName() + ".txt");
-            try {
+            try{
                 BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
                 bw.write("[" + LocalDateTime.now() + "] " + player.getName() + ": **SESSION STARTED**");
                 bw.newLine();
@@ -47,28 +48,22 @@ public class ModMode {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (p.hasPermission("metrocore.mod")) {
-                    for (String s : plugin.getConfig().getStringList("metromoderation.turn_on.messages")) {
-                        String message = ChatColor.translateAlternateColorCodes('&', s).replaceAll("%player%", player.getName());
-                        p.sendMessage(message);
-                    }
-                }
+            for(Player p : Bukkit.getOnlinePlayers()){
+                if(p.hasPermission("metrocore.mod"))
+                    for (String message : plugin.getConfig().getStringList("metromoderation.turn_on.messages"))
+                        plugin.sendWithPrefix(player, message.replace("%player%", player.getName()));
             }
-            for (String s : plugin.getConfig().getStringList("metromoderation.turn_on.commands")) {
-                String cmd = s.replaceAll("%player%", player.getName());
-                Bukkit.dispatchCommand(sender, cmd);
-            }
+            for(String command : plugin.getConfig().getStringList("metromoderation.turn_on.commands"))
+                Bukkit.dispatchCommand(sender, command.replace("%player%", player.getName()));
         }
     }
 
-    public void disableModMode(Player player) {
-        if (plugin.Mod.get(player).equals(false)) {
-            for (String s : plugin.getConfig().getStringList("metromoderation.already_inactive")) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', s));
-            }
-        } else {
-            plugin.Mod.replace(player, false);
+    public void disableModMode(Player player){
+        if(!(playerStates.getPlayerState(player).equals(PlayerStates.PlayerState.MOD)))
+            for(String message : plugin.getConfig().getStringList("metromoderation.already_inactive"))
+                plugin.sendWithPrefix(player, message);
+        else{
+            playerStates.setPlayerState(player, PlayerStates.PlayerState.NORMAL);
             File folder = new File(plugin.getDataFolder() + File.separator + "Logs" + File.separator + "Mod" + File.separator);
             File file = new File(folder, player.getName() + ".txt");
             try {
@@ -80,19 +75,14 @@ public class ModMode {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (p.hasPermission("metrocore.mod")) {
-                    for (String s : plugin.getConfig().getStringList("metromoderation.turn_off.messages")) {
-                        String message = ChatColor.translateAlternateColorCodes('&', s).replaceAll("%player%", player.getName());
-                        p.sendMessage(message);
-                    }
-                }
-            }
-            for (String s : plugin.getConfig().getStringList("metromoderation.turn_off.commands")) {
-                String cmd = s.replaceAll("%player%", player.getName());
-                Bukkit.dispatchCommand(sender, cmd);
-            }
 
+            for(Player p : Bukkit.getOnlinePlayers()){
+                if(p.hasPermission("metrocore.mod"))
+                    for(String message : plugin.getConfig().getStringList("metromoderation.turn_off.messages"))
+                        plugin.sendWithPrefix(player, message.replace("%player%", player.getName()));
+            }
+            for(String command : plugin.getConfig().getStringList("metromoderation.turn_off.commands"))
+                Bukkit.dispatchCommand(sender, command.replace("%player%", player.getName()));
         }
     }
 }

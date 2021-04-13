@@ -1,15 +1,22 @@
 package com.minty.metrocore;
 
 import com.minty.metrocore.commands.*;
+import com.minty.metrocore.database.BugReportsDatabase;
+import com.minty.metrocore.database.NotesDatabase;
+import com.minty.metrocore.database.PlayerReportDatabase;
+import com.minty.metrocore.discord.SendMessageToChannel;
 import com.minty.metrocore.filehandling.*;
 import com.minty.metrocore.listeners.*;
+import com.minty.metrocore.managers.CommandManager;
 import com.minty.metrocore.methods.AdminMode;
 import com.minty.metrocore.methods.ModMode;
+import com.minty.metrocore.methods.PlayerStates;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import org.bukkit.*;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.security.auth.login.LoginException;
@@ -19,30 +26,38 @@ import java.util.*;
 public class MetroCore extends JavaPlugin {
 
     private final static ConsoleCommandSender sender = Bukkit.getConsoleSender();
-    public static HashMap<Player, Boolean> Mod;
-    public static HashMap<Player, Boolean> Admin;
     public static JDA jda;
-    //private final PlayerStates playerStates;
+    private PlayerStates playerStates;
     private PlayerJoinDatabase playerDatabase;
-    private CreateAdminFile adminFile;
-    private CreateModFile modFile;
     private LogCommands logCommands;
     private ModMode modMode;
     private AdminMode adminMode;
     private CreateDirectory createDirectory;
     private CreatePluginFiles createPluginFiles;
     private CreateDatabase createDatabase;
+    private SendMessageToChannel sendMessageToChannel;
+    private CommandManager commandManager;
+    private BugReportsDatabase bugReportsDatabase;
+    private PlayerReportDatabase playerReportDatabase;
+    private NotesDatabase notesDatabase;
 
-    // /yeet remake huehuehue
-    // DiscordBot from server > bugreports || punishments  || player reports || ranks++ (Discord -> Minecraft <- Sync) || suggestions
-    // /punish > GUI with selective options > Follows guidelines > Takes previous offenses into account too
-    // PlayerCommandPreprocessEvent > Register commands
-    // coinflip command
-    // force commands to look for player
-    //
+    // To do list
+    // Remove commands from plugin.yml
+    // re-write all commands (subcommands)
+    // tab completion for all commands
+    // make classes for all database handling
+    // aliases for each subcommand
+    // learn how to use turnary
+    // learn how to use lambda
+    // re-write config.yml
+    // Check all nodes are correct from config/yml > subcommands
+    // add subcommands to CommandManager
+    // fix admin/mod command
 
     @Override
     public void onEnable() {
+
+        this.saveDefaultConfig();
 
         try {
             jda = JDABuilder.createDefault("token").build();
@@ -54,38 +69,34 @@ public class MetroCore extends JavaPlugin {
             this.getLogger().severe("[MetroCore] Cannot connect to Discord");
         }
 
-        this.playerDatabase = new PlayerJoinDatabase(this);
-        this.adminFile = new CreateAdminFile(this);
-        this.modFile = new CreateModFile(this);
-        this.logCommands = new LogCommands(this, adminFile, modFile);
-        this.modMode = new ModMode(this);
-        this.adminMode = new AdminMode(this);
+        // Don't need a hard reference necessarily????
+        this.playerStates = new PlayerStates();
         this.createDirectory = new CreateDirectory(this);
         this.createPluginFiles = new CreatePluginFiles(this, createDirectory);
         this.createDatabase = new CreateDatabase(this, createDirectory);
+        this.playerDatabase = new PlayerJoinDatabase(this);
+        this.logCommands = new LogCommands(this, createPluginFiles);
+        this.modMode = new ModMode(this, playerStates);
+        this.adminMode = new AdminMode(this, playerStates);
+        this.bugReportsDatabase = new BugReportsDatabase(this);
+        this.playerReportDatabase = new PlayerReportDatabase(this);
+        this.notesDatabase = new NotesDatabase(this);
+        this.commandManager = new CommandManager(this,
+                sendMessageToChannel, bugReportsDatabase,
+                adminMode, modMode, playerStates,
+                playerReportDatabase, notesDatabase);
 
-        getServer().getPluginManager().registerEvents(new LandClaimListener(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, playerDatabase, adminFile, modFile), this);
-        getServer().getPluginManager().registerEvents(new CommandUseListener(this, logCommands), this);
-        getServer().getPluginManager().registerEvents(new ChatListener(this, logCommands), this);
-        getServer().getPluginManager().registerEvents(new PlayerLeaveListener(this, modMode, adminMode), this);
+        this.sendMessageToChannel = new SendMessageToChannel(this);
 
-        this.getCommand("metrocore").setExecutor(new MetroCoreCommand(this));
-        this.getCommand("mod").setExecutor(new ModCommand(this, modMode));
-        this.getCommand("admin").setExecutor(new AdminCommand(this, adminMode));
-        this.getCommand("notes").setExecutor(new NotesCommand(this));
-        this.getCommand("rtp").setExecutor(new RandomTeleportCommand(this));
-        this.getCommand("bugreport").setExecutor(new BugReportCommand(this));
-        this.getCommand("report").setExecutor(new PlayerReportCommand(this));
-        this.getCommand("watchlist").setExecutor(new WatchlistCommand(this));
-        this.getCommand("suggestion").setExecutor(new SuggestionsCommand(this));
+        PluginManager pluginManager = getServer().getPluginManager();
+
+        pluginManager.registerEvents(new LandClaimListener(this), this);
+        pluginManager.registerEvents(new PlayerJoinListener(playerDatabase, playerStates, createPluginFiles), this);
+        pluginManager.registerEvents(new CommandUseListener(this, logCommands, playerStates), this);
+        pluginManager.registerEvents(new ChatListener(this, logCommands, playerStates), this);
+        pluginManager.registerEvents(new PlayerLeaveListener(modMode, adminMode), this);
 
 
-
-        getLogger().info("Enabled");
-        Mod = new HashMap<>();
-        Admin = new HashMap<>();
-        this.saveDefaultConfig();
 
         createDirectory.createDir("Logs");
         createDirectory.createDir("AidanNotes");
@@ -104,10 +115,20 @@ public class MetroCore extends JavaPlugin {
         createDatabase.createDb("BugReports", "BugReports.db", sql);
         sql = "CREATE TABLE IF NOT EXISTS PLAYERREPORTS (ID INTEGER PRIMARY KEY NOT NULL, PLAYER TEXT NOT NULL, REPORTED TEXT NOT NULL, REASON TEXT NOT NULL, DATE TEXT NOT NULL)";
         createDatabase.createDb("PlayerReports", "PlayerReports.db", sql);
+        sql = "CREATE TABLE IF NOT EXISTS AIDANNOTES (ID INTEGER PRIMARY KEY NOT NULL, NOTE TEXT NOT NULL, STATUS TEXT NOT NULL)";
+        createDatabase.createDb("AidanNotes", "AidanNotes.db", sql);
+
+        getLogger().info("Enabled");
     }
 
     @Override
     public void onDisable() {
         reloadConfig();
+    }
+
+    public void sendWithPrefix(Player player, String message){
+        String prefix = this.getConfig().getString("prefix");
+
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + message));
     }
 }
