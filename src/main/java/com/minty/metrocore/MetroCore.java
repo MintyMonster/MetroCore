@@ -42,17 +42,10 @@ public class MetroCore extends JavaPlugin {
     private NotesDatabase notesDatabase;
 
     // To do list
-    // Remove commands from plugin.yml
-    // re-write all commands (subcommands)
     // tab completion for all commands
-    // make classes for all database handling
-    // aliases for each subcommand
     // learn how to use turnary
     // learn how to use lambda
-    // re-write config.yml
-    // Check all nodes are correct from config/yml > subcommands
-    // add subcommands to CommandManager
-    // fix admin/mod command
+    // Create message manager
 
     @Override
     public void onEnable() {
