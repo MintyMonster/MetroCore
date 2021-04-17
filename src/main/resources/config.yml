@@ -21,13 +21,14 @@ RTP:
   messages:
     looking_for_safe: '&cLooking for a safe block...'
     found_safe: '&aSafe block found! &eTeleporting...'
+    is_nether: '&cSorry, you can''t RTP here.'
 
     # %x% = X coord
     # %y% = Y coord
     # %z% = Z coord
     # %player% = player
   commands:
-    - 'cmi bossbarmsg %player% &7You have been teleported to &e%x%&7, &e%y%&7, &e%z% -t:2 -a:1 -p:1'
+    - 'cmi toast %player% -t:task -icon:eye_of_ender &d&lTHE WILD &7Landed:\n&e&e%x%&7, &e%y%&7, &e%z%'
 
 
 metroclaimkeys:
@@ -86,10 +87,6 @@ metroadmin:
     messages:
       - '&c&o%player% &eclosed an &c&oAdministration Session&7.'
       - '&7Actions are no longer being logged or monitored.'
-
-
-
-
 
 # /bugreport <text>
 bugreport:
@@ -164,6 +161,20 @@ discord:
   watchlist_channel_id: 828621711187902534
   bugreport_channel_id: 829467871859310652
   notes_channel_id: 829465450274226206
+  punishment_channel_id: 829465416534327398
+
+  link:
+    # %code% is unique generated code
+    link_message: '&eGo to the &6Survive&eMetro Discord &7(http://bit.ly/SurviveMetro) &eand type &8[&e-link &c%code%&8]. &c&lDo not log out'
+    already_linked: '&eYou''ve already linked your Discord. Thanks!'
+    linked: '&eDiscord link &asuccessful&e! Thanks :D'
+    currently_linking: '&eYou''re already trying to link. Your code is: &c%code%'
+    rewards:
+      commands:
+        - 'give %player% diamond 1'
+
+    unlink_message: '&eYou''ve successfully unlinked &c%player%'
+    role_to_give_id: 832782547925991494
 
 
 

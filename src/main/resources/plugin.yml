@@ -1,6 +1,6 @@
 name: MetroCore
 version: 1.0
-main: com.minty.metrocore.MetroCore
+main: uk.co.minty_studios.metrocore.MetroCore
 author: MintyMonster
 description: Core plugin for SurviveMetro
 commands:
@@ -9,7 +9,7 @@ commands:
     description: Admin MetroCore commands
     usage: /metrocore
     permission-message: Permission denied.
-    permission: metrocore.admin
+    permission: metrocore.core
   admin:
     description: Admin mode toggle
     usage: /admin [on|off]
@@ -25,19 +25,19 @@ commands:
     aliases: [brep, bug, br]
     usage: /bugreport submit <text>
     permission-message: Permission denied.
-    permission: metrocore.bugreport
+    permission: metrocore.core
   playerreport:
     description: Report a player!
     aliases: [report, rep, prep, preport]
     usage: /report submit <player> <reason>
     permission-message: Permission denied.
-    permission: metrocore.playerreport
+    permission: metrocore.core
   rtp:
     description: Randomly teleport throughout the world!
     aliases: [wild, randomteleport]
     usage: /rtp
     permission-message: Permission denied.
-    permission: metrocore.rtp
+    permission: metrocore.core
   notes:
     description: Metro's very own sticky notes!
     aliases: [n, note]
@@ -49,11 +49,17 @@ commands:
     aliases: [suggest, suggestion, sugg, sug]
     usage: /suggest <text>
     permission-message: Permission denied.
-    permission: metrocore.suggestions
+    permission: metrocore.core
   watchlist:
     description: Add to the watchlist!
     aliases: [wlist, wl, watch]
     usage: /watchlist add <player> <reason>
     permission-message: Permission denied.
-    permission: metrocore.watchlist
+    permission: metrocore.mod
+  discord:
+    aliases: [disc, dcord, dc, d]
+    description: All related Discord commands!
+    usage: /discord
+    permission-message: Permission denied.
+    permission: metrocore.core
   # Add /dev || regular player > op ! op
